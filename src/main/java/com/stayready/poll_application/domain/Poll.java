@@ -2,6 +2,7 @@ package com.stayready.poll_application.domain;
 
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,6 +10,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 public class Poll {
@@ -19,10 +23,12 @@ public class Poll {
     private Long id;
 
     @Column(name = "QUESTION")
+    @NotEmpty
     private String question;
 
-    @OneToMany(cascade = "CascadeType.ALL")
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "POLL_ID")
+    @Size(min = 2, max = 6)
     @OrderBy
     private Set<Option> options;
 
